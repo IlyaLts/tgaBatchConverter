@@ -57,10 +57,12 @@ void FindFiles(const WCHAR *path, vector<wstring> &files)
     size_t index = dirPath.find_last_of(L"\\");
     size_t index2 = dirPath.find_last_of(L"/");
 
-    if (index2 != string::npos && index2> index)
+    if (index2 != string::npos && (index == string::npos || index2 > index))
         index = index2;
 
-    dirPath.erase(index, dirPath.size() - index);
+    if (index != string::npos)
+        dirPath.erase(index, dirPath.size() - index);
+    
     wstring dirPathWithWildcard(dirPath);
     dirPathWithWildcard.append(L"/*");
 
@@ -109,6 +111,7 @@ void FindFiles(const WCHAR *path, vector<wstring> &files)
 int wmain(int argc, WCHAR *argv[])
 {
     vector<wstring> files;
+    setlocale(LC_ALL, ".UTF8");
 
     if (argc != 3)
     {
@@ -127,7 +130,7 @@ int wmain(int argc, WCHAR *argv[])
 
         return -1;
     }
-
+    
     tga_type mode = static_cast<tga_type>(_wtoi(argv[2]));
 
     if (IsFolder(argv[1]))
@@ -139,17 +142,13 @@ int wmain(int argc, WCHAR *argv[])
     {
         tga_image tga;
 
-        char buf[128];
-        size_t c = 0;
-        wcstombs_s(&c, buf, path.c_str(), sizeof(buf));
-
-        if (!load_tga(buf, &tga))
+        if (!wload_tga(path.c_str(), &tga))
             continue;
 
-        if (save_tga(buf, &tga, mode))
-            printf("%s - success\n", buf);
+        if (wsave_tga(path.c_str(), &tga, mode))
+            wprintf(L"%s - success\n", path.c_str());
         else
-            printf("%s - failure\n", buf);
+            wprintf(L"%s - failure\n", path.c_str());
     }
 
     return 0;
