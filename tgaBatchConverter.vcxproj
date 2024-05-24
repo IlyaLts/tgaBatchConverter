@@ -137,10 +137,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="libtga\tga.c" />
+    <ClCompile Include="libtga\wcharconv\wcharconv.c" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libtga\tga.h" />
+    <ClInclude Include="libtga\wcharconv\wcharconv.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
