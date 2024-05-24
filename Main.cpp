@@ -143,7 +143,10 @@ int wmain(int argc, WCHAR *argv[])
         tga_image tga;
 
         if (!wload_tga(path.c_str(), &tga))
+        {
+            wprintf(L"%s - couldn't open.\n", path.c_str());
             continue;
+        }
 
         if (wsave_tga(path.c_str(), &tga, mode))
             wprintf(L"%s - success\n", path.c_str());
