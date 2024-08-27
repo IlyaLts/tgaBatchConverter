@@ -25,3 +25,9 @@ or
 
 ### Notes
 Using "0" and "5" formats will fail if the image has over 256 colors.
+
+## Building
+Buildable with Visual Studio.
+
+## License
+TGA batch converter is licensed under the MIT license, see LICENSE.txt for more information.
